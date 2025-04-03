@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Up ToDo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="scene-container"></div>
+
+    <div id="ui-container">
+        <h2>Add New Bubble</h2>
+        <label for="task-name">Task:</label>
+        <input type="text" id="task-name" name="task-name"><br><br>
+
+        <label for="due-date">Due Date:</label>
+        <input type="date" id="due-date" name="due-date"><br><br>
+
+        <label for="priority">Priority (1-5):</label>
+        <input type="number" id="priority" name="priority" min="1" max="5" value="3"><br><br>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" value="General"><br><br>
+
+        <label for="repeating">Repeating:</label>
+        <input type="checkbox" id="repeating" name="repeating"><br><br>
+
+        <button id="add-bubble-btn">Add Bubble</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

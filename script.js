@@ -4,6 +4,7 @@ let bubbles = []; // Array to hold our bubble objects (mesh + body + data)
 const clock = new THREE.Clock(); // For physics time step
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
+let bubblePhysicsMaterial; // Declare in higher scope
 
 const sceneContainer = document.getElementById('scene-container');
 
@@ -43,7 +44,7 @@ function init() {
     world.solver.iterations = 10; // Increase for more stability
 
     // Define material properties for bubbles
-    const bubblePhysicsMaterial = new CANNON.Material('bubbleMaterial');
+    bubblePhysicsMaterial = new CANNON.Material('bubbleMaterial'); // Assign to higher scope variable
     const bubbleContactMaterial = new CANNON.ContactMaterial(
         bubblePhysicsMaterial,
         bubblePhysicsMaterial,
@@ -181,12 +182,12 @@ function handleAddBubble() {
         taskName, dueDate, priority, category, repeating
     });
 
-    // Clear input fields (optional)
-    // document.getElementById('task-name').value = '';
-    // document.getElementById('due-date').value = '';
-    // document.getElementById('priority').value = 3;
-    // document.getElementById('category').value = 'General';
-    // document.getElementById('repeating').checked = false;
+    // Clear input fields
+    document.getElementById('task-name').value = '';
+    document.getElementById('due-date').value = '';
+    document.getElementById('priority').value = 3; // Reset to default
+    document.getElementById('category').value = 'General'; // Reset to default
+    document.getElementById('repeating').checked = false; // Reset to default
 }
 
 // --- Interaction Handling ---

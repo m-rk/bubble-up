@@ -38,8 +38,8 @@ function init() {
 
     // --- Physics Setup (Cannon.js) ---
     world = new CANNON.World();
-    // Gravity pulling slightly upwards to make bubbles float
-    world.gravity.set(0, 2, 0); // Adjust Y value for float speed
+    // Set gravity to zero, we'll use custom forces for floating/clustering
+    world.gravity.set(0, 0, 0);
     world.broadphase = new CANNON.NaiveBroadphase(); // Simple broadphase for now
     world.solver.iterations = 10; // Increase for more stability
 
@@ -268,8 +268,26 @@ function animate() {
     const maxSubSteps = 3;
     world.step(fixedTimeStep, deltaTime, maxSubSteps);
 
-    // --- Sync Meshes with Physics Bodies ---
+    // --- Apply Central Attraction Force & Sync Meshes ---
+    const clusterCenter = new CANNON.Vec3(0, 2, 0); // Target center for the cluster
+    const attractionStrength = 0.5; // Adjust this value to change how strongly bubbles are pulled
+
     bubbles.forEach(bubble => {
+        // Calculate vector from bubble to center
+        const forceDirection = clusterCenter.vsub(bubble.body.position); // Vector pointing towards center
+        const distance = forceDirection.length();
+
+        // Normalize the direction vector
+        forceDirection.normalize();
+
+        // Apply force proportional to distance (optional, could just use constant strength)
+        // let forceMagnitude = attractionStrength * distance;
+        let forceMagnitude = attractionStrength; // Simpler constant force for now
+
+        // Apply the force
+        bubble.body.applyForce(forceDirection.scale(forceMagnitude), bubble.body.position);
+
+        // Sync mesh position/rotation
         bubble.mesh.position.copy(bubble.body.position);
         bubble.mesh.quaternion.copy(bubble.body.quaternion);
     });
